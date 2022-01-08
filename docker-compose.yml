@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+
+  db:
+    image: postgres
+    volumes:
+      - ./.docker/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5435:5432"
+
+  rails-app:
+    build: ./rails-api
+    volumes:
+      - ./rails-api:/rails-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
